@@ -1,6 +1,6 @@
 # JavyTool
 
-TODO: Write a gem description
+Just pack some methods that ofen used to a gem,ex:h2o,truncate etc..
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+JavyTool.h2o(aHash)
 
 ## Contributing
 

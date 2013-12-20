@@ -6,14 +6,16 @@ require 'javy_tool/version'
 Gem::Specification.new do |gem|
   gem.name          = "javy_tool"
   gem.version       = JavyTool::VERSION
-  gem.authors       = ["qmliu"]
-  gem.email         = ["qmliu@pearlinpalm.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.authors       = ["javy_liu"]
+  gem.email         = ["javy_liu@163.com"]
+  gem.description   = %q{pack some used methods}
+  gem.summary       = %q{some methods ofen used in my projects}
+  gem.homepage      = "https://github.com/javyliu/javy_tool"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  #s.add_dependency "rails", "~> 3.2.6"
 end
