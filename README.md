@@ -1,6 +1,6 @@
 # JavyTool
 
-Just pack some methods that ofen used to a gem,ex:h2o,truncate etc..
+Just packed some methods that used usually to a gem,ex:h2o,truncate etc..
 
 ## Installation
 
