@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-JavyTool.h2o(aHash)
+JavyTool.utils.h2o(aHash)
 
 ## Contributing
 
