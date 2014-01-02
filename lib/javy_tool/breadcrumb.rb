@@ -8,7 +8,7 @@ module JavyTool
       protected
 
       def set_breadcrumbs
-        #@breadcrumbs = ["#{I18n.t("common.locate_des")}<a href='/wb/'>#{I18n.t("common.forum_home")}</a>".html_safe]
+        @breadcrumbs = ["#{I18n.t("common.index_icon")}<a href='/'>#{I18n.t("common.home")}</a>".html_safe]
       end
 
       def drop_breadcrumb(title=nil, url=nil)
@@ -66,7 +66,7 @@ module JavyTool
         flash.each do |type, message|
           type = :success if type == :notice
           type = :alert if type == :error
-          text = content_tag(:div, message, :class => "alert-#{type} alert-box")
+          text = content_tag(:div, message, :class => "alert-box #{type}")
           flash_messages << text if message
         end
         flash_messages.join("\n").html_safe

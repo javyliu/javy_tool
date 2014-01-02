@@ -2,6 +2,47 @@ module JavyTool
   module Utils
     require "ostruct"
     module_function
+
+    #get user agent
+    def which_os(req)
+      case req
+      when /(Android)\s+([\d.]+)/
+        "android"
+      when /(iPad).*OS\s([\d_]+)|iTunes-iPad/
+        "ipad"
+      when /(iPhone\sOS)\s([\d_]+)|iTunes-iPhone|iTunes-iPod/
+        "iphone"
+      when /TouchPad/
+        "touchpad"
+      when /(webOS|hpwOS)[\s\/]([\d.]+)/
+        "webos"
+      when /WebKit\/([\d.]+)/
+        "webkit"
+      end
+    end
+
+    #judge user agent
+    def webkit?(req)
+      !!(/WebKit\/([\d.]+)/ =~ req)
+    end
+    def android?(req)
+      !!(/(Android)\s+([\d.]+)/ =~ req)
+    end
+    def ipad?(req)
+      !!(/(iPad).*OS\s([\d_]+)/ =~ req)
+    end
+    def iphone?(req)
+      !ipad?(req) && !!(/(iPhone\sOS)\s([\d_]+)|iTunes-iPhone|iTunes-iPod/ =~ req)
+    end
+    def ios?(req)
+      ipad?(req) || iphone?(req)
+    end
+    def webos?(req)
+      !!(/(webOS|hpwOS)[\s\/]([\d.]+)/ =~ req)
+    end
+    def touchpad?(req)
+      webos?(req) && !!(/TouchPad/ =~ req)
+    end
     # translate a Hash object to a OpenStruct object
     # parameter:
     # ahash => Hash
