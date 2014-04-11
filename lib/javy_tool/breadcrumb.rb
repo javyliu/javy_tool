@@ -50,13 +50,14 @@ module JavyTool
         id_attribute = (@body_id)? " id=\"#{@body_id}-page\"" : ""
 
         raw(%Q|<!--[if lt IE 7 ]>
-<body class="#{class_attribute} ie6"><![endif]-->
-<!--[if gte IE 7 ]>
-<body class="#{class_attribute} ie"><![endif]-->
+<body class="#{class_attribute} lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7 ]>
+<body class="#{class_attribute} lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8 ]>
+<body class="#{class_attribute} lt-ie9"><![endif]-->
 <!--[if !IE]>-->
 <body#{id_attribute} class="#{class_attribute}">
 <!--<![endif]-->|)
-
       end
 
 
