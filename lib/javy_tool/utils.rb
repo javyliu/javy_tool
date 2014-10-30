@@ -80,9 +80,6 @@ module JavyTool
           yield file.original_filename
         else
           Time.now.strftime("%Y%m%d%H%M%S") + rand(10000).to_s + File.extname(file.original_filename)
-         # if File.extname(file.original_filename).downcase == ".apk"
-         #            file.original_filename.gsub(/[^\w]/,'') #
-         # end
         end
         File.open(path+filename, "wb") { |f| f.write(file.read) }
         filename
