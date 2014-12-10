@@ -1,6 +1,7 @@
 module JavyTool
   module Utils
     require "ostruct"
+    require "active_support"
     module_function
 
     #get user agent
@@ -69,6 +70,38 @@ module JavyTool
     def truncate_o(text,length=16)
       text = Iconv.conv("gb2312","utf8",text)[0,length]
       Iconv.conv("utf8","gb2312",text)
+    end
+
+
+    #用于抽奖
+    #传入代表中奖概率的数组如 1,10,20,30,40
+    #返回数组的索引
+    # 真实场景
+    # 奖项数组
+    # prize_arr =[
+    # ['id'=>1,'prize'=>'平板电脑','v'=>1],
+    # ['id'=>2,'prize'=>'数码相机','v'=>5],
+    # ['id'=>3,'prize'=>'音箱设备','v'=>10],
+    # ['id'=>4,'prize'=>'4G优盘','v'=>12],
+    # ['id'=>5,'prize'=>'10Q币','v'=>22],
+    # ['id'=>6,'prize'=>'下次没准就能中哦','v'=>50],
+    # ]
+    #
+    # 传给loggery的数组应为 1,5,10,12,22,50
+    # 返回的索引值即代表奖品的索引值
+
+    def lottery(*args)
+      args.extract_options!
+      total = args.inject{|sum,item|sum+=item}
+
+      args.flattern.each_with_index do |item,index|
+        rand_num = rand(1..total)#.tap{|it|puts "--------#{it}"}
+        if rand_num <= item
+         return index
+        else
+          total -= item
+        end
+      end
     end
 
     # upload file,default to /tmp
