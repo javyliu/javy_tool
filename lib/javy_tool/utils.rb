@@ -94,7 +94,7 @@ module JavyTool
       args.extract_options!
       total = args.inject{|sum,item|sum+=item}
 
-      args.flattern.each_with_index do |item,index|
+      args.flatten.each_with_index do |item,index|
         rand_num = rand(1..total)#.tap{|it|puts "--------#{it}"}
         if rand_num <= item
          return index
