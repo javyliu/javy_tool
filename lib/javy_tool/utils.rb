@@ -95,7 +95,7 @@ module JavyTool
       total = args.inject{|sum,item|sum+=item}
 
       args.flatten.each_with_index do |item,index|
-        rand_num = rand(1..total)#.tap{|it|puts "--------#{it}"}
+        rand_num = rand(1..total)#.tap{|it|puts ".#{item}.#{index}..#{it}.#{total}-------"}
         if rand_num <= item
          return index
         else
