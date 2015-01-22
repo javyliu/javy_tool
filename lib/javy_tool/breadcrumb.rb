@@ -13,7 +13,6 @@ module JavyTool
 
       def drop_breadcrumb(title=nil, url=nil)
         title ||= @page_title
-        #url ||= url_for
         if title
           if url
             @breadcrumbs.push("<a href=\"#{url}\">#{title}</a>".html_safe)
@@ -48,26 +47,17 @@ module JavyTool
       def render_body_tag
         class_attribute = ["#{controller_name}-controller","#{action_name}-action"].join(" ")
         id_attribute = (@body_id)? " id=\"#{@body_id}-page\"" : ""
-
-        raw(%Q|<!--[if lt IE 7 ]>
-<body class="#{class_attribute} lt-ie9 lt-ie8 lt-ie7"><![endif]-->
-<!--[if IE 7 ]>
-<body class="#{class_attribute} lt-ie9 lt-ie8"><![endif]-->
-<!--[if IE 8 ]>
-<body class="#{class_attribute} lt-ie9"><![endif]-->
-<!--[if !IE]>-->
-<body#{id_attribute} class="#{class_attribute}">
-<!--<![endif]-->|)
+        raw(%Q[ <body#{id_attribute} class="#{class_attribute}"> ])
       end
 
 
-      # display the flash messages
+      # display the flash messages using foundation
       def notice_message
         flash_messages = []
         flash.each do |type, message|
-          type = :success if type == :notice
+          type = :info if type == :notice
           type = :alert if type == :error
-          text = content_tag(:div, message, :class => "alert-box #{type}")
+          text = content_tag(:div, message, class: "alert-box #{type}")
           flash_messages << text if message
         end
         flash_messages.join("\n").html_safe
@@ -80,20 +70,15 @@ module JavyTool
       def render_breadcrumb
         return "" if @breadcrumbs.nil? || @breadcrumbs.size <= 0
         prefix = "".html_safe
-        crumb = "".html_safe
+        crumb = []#.html_safe
 
         @breadcrumbs.each_with_index do |c, i|
           breadcrumb_class = []
-          breadcrumb_class << "active" if i == (@breadcrumbs.length - 1)
-          if i == (@breadcrumbs.length - 1)
-            breadcrumb_content = c
-          else
-            breadcrumb_content = c + content_tag(:span, ">", :class => "divider")
-          end
+          breadcrumb_class << "current" if i == (@breadcrumbs.length - 1)
 
-          crumb += content_tag(:li, breadcrumb_content ,:class => breadcrumb_class )
+          crumb.push content_tag(:li, c ,:class => breadcrumb_class )
         end
-        return prefix + content_tag(:ul, crumb, :class => "breadcrumb")
+        return prefix + content_tag(:ul, crumb.join("").html_safe, :class => "breadcrumbs")
       end
 
       # add nested object to the parent form by ajax
