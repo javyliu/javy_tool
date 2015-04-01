@@ -10,15 +10,22 @@ module JavyTool
         _class = model_class.classify.constantize
         param =  param || model_class.underscore
         #instance variable need to be remove
-        _obj = _class.send(:new,params[param])
-        self.instance_variable_set("@#{param}", _obj)
+        #_obj = _class.send(:new,params[param])
+        #self.instance_variable_set("@#{param}", _obj)
 
         if params[param]
           con_hash = params[param].select{|_,value|value.present?}
           if con_hash.present?
             _like_con = con_hash.extract!(*(like_ary.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","%#{v}%"] } if like_ary.present?
-            _gt_con = con_hash.extract!(*(gt.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} >= ?",v] } if gt.present?
-            _lt_con = con_hash.extract!(*(lt.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} <= ?",v] } if lt.present?
+
+            if gt.present?
+              gt.collect!{|item|item.to_s}
+              _gt_con=(con_hash.extract!(*gt).presence || con_hash.extract!(*gt.map{|item| "gt_#{item}"})).map{|k,v| ["#{k.sub(/^gt_/,'')} >= ?",v] }
+            end
+            if lt.present?
+              lt.collect!{|item|item.to_s}
+              _lt_con=(con_hash.extract!(*lt).presence || con_hash.extract!(*lt.map{|item| "lt_#{item}"})).map{|k,v| ["#{k.sub(/^lt_/,'')} <= ?",v] }
+            end
 
             all_ary_con = ((_like_con || [])+(_gt_con||[])+(_lt_con||[])).transpose
             all_ary_con = [all_ary_con.first.join(" and "),all_ary_con.last].flatten if all_ary_con.present?
