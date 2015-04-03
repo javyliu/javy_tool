@@ -9,15 +9,20 @@ module JavyTool
       # or
       #  select_columns = "id,name,user_id"
       #  format.xls {send_data @checkinouts.select(_select_columns).to_csv(select: _select_columns)}
-      def to_csv(options = {})
+      def to_csv(options = {},&block)
         select_values = options.delete(:select)
+        objs = options.delete(:objs) # model instances list
         select_values = select_values.split(",").collect{|e| e.split(/\s+|\./).last} if select_values.kind_of?(String)
         options[:col_sep] ||= "\t"
         CSV.generate(options) do |csv|
           cols = select_values.presence || column_names
           csv << cols
-          all.each do |item|
-            csv << item.attributes.values_at(*cols)
+          (objs || all).each do |item|
+            if block_given?
+              csv << yield(item,cols)
+            else
+              csv << item.attributes.values_at(*cols)
+            end
           end
         end
       end
