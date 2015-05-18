@@ -1,6 +1,7 @@
 module JavyTool
   module ConstructQuery
-    module InstanceMethods
+      protected
+
       #like_ary：需要作like查询的字段，数组类型
       #model_class: 查询的类名，字符串类型
       #param: 查询参数,为空的话默认用model_class参数的underscore版本
@@ -38,10 +39,6 @@ module JavyTool
         [con_hash.presence || nil,all_ary_con]
       end
 
-    end
 
-    def self.included(receiver)
-      receiver.send :include, InstanceMethods
-    end
   end
 end

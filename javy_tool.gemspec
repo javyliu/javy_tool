@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.name          = "javy_tool"
   gem.version       = JavyTool::VERSION
   gem.authors       = ["javy_liu"]
+  gem.licenses      = ["MIT"]
   gem.email         = ["javy_liu@163.com"]
   gem.description   = %q{pack some used methods}
   gem.summary       = %q{some methods ofen used in my projects}

@@ -186,7 +186,7 @@ module JavyTool
       #receiver.extend         ClassMethods
       receiver.send :include, InstanceMethods
       receiver.send :helper, Helpers
-      receiver.send :before_action, :set_breadcrumbs
+      receiver.send (Rails::VERSION::MAJOR > 3 ? :before_action : :before_filter), :set_breadcrumbs
     end
   end
 end
