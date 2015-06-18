@@ -21,11 +21,13 @@ module JavyTool
 
             if gt.present?
               gt.collect!{|item|item.to_s}
-              _gt_con=(con_hash.extract!(*gt).presence || con_hash.extract!(*gt.map{|item| "gt_#{item}"})).map{|k,v| ["#{k.sub(/^gt_/,'')} >= ?",v] }
+              gt = (gt + gt.map{|item| "gt_#{item}"}) & con_hash.keys
+              _gt_con=con_hash.extract!(*gt).tap{|t|Rails.logger.info(t.inspect)}.map{|k,v| ["#{k.sub(/^gt_/,'')} >= ?",v] }
             end
             if lt.present?
               lt.collect!{|item|item.to_s}
-              _lt_con=(con_hash.extract!(*lt).presence || con_hash.extract!(*lt.map{|item| "lt_#{item}"})).map{|k,v| ["#{k.sub(/^lt_/,'')} <= ?",v] }
+              lt = (lt + lt.map{|item| "lt_#{item}"}) & con_hash.keys
+              _lt_con= con_hash.extract!(*lt).tap{|t|Rails.logger.info(t.inspect)}.map{|k,v| ["#{k.sub(/^lt_/,'')} <= ?",v] }
             end
 
             all_ary_con = ((_like_con || [])+(_gt_con||[])+(_lt_con||[])).transpose
