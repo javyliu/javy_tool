@@ -55,6 +55,7 @@ module JavyTool
       def notice_message
         flash_messages = []
         flash.each do |type, message|
+          next if message.nil?
           type = :info if type == :notice
           type = :alert if type == :error
           text = content_tag(:div, message.html_safe, class: "alert-box #{type}")
