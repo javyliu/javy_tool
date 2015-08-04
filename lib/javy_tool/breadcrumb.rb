@@ -149,12 +149,13 @@ module JavyTool
       #  });
       #
       #
-      def link_to_add_fields(name, f, association,new_object=nil)
+      def link_to_add_fields(name, f, association,new_object=nil,options={})
         new_object ||= f.object.class.reflect_on_association(association).klass.new()
         fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
           render(association.to_s.singularize + "_fields", :f => builder)
         end
-        link_to(name,"#",class: "add_fields",data: {association: association,content: escape_javascript(fields.html_safe)})
+        options.merge!(data: {association: association,content: escape_javascript(fields.html_safe)},class: "add_fields")
+        link_to(name,"#",options)
       end
 
 
