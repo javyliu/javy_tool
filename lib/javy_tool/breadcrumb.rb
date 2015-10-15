@@ -8,7 +8,7 @@ module JavyTool
       protected
 
       def set_breadcrumbs
-        Rails.logger.info I18n.locale
+        #Rails.logger.info I18n.locale
         @breadcrumbs = ["#{I18n.t('common.index_icon')}#{view_context.link_to(I18n.t('common.home'), root_path)}".html_safe]
       end
 
