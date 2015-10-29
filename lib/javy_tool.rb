@@ -5,6 +5,7 @@ module JavyTool
   autoload :Breadcrumb, "javy_tool/breadcrumb"
   autoload :Csv, "javy_tool/csv"
   autoload :ConstructQuery, "javy_tool/construct_query"
+  autoload :CustomError, "javy_tool/custom_error"
   mattr_accessor :tool_config
   mattr_accessor :upload_path
   @@upload_path = "/tmp"
