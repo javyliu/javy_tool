@@ -20,14 +20,14 @@ module JavyTool
             _like_con = con_hash.extract!(*(like_ary.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","%#{v}%"] } if like_ary.present?
 
             if gt.present?
-              gt.collect!{|item|item.to_s}
+              gt.collect!(&:to_s)
               gt = (gt + gt.map{|item| "gt_#{item}"}) & con_hash.keys
-              _gt_con=con_hash.extract!(*gt).tap{|t|Rails.logger.info(t.inspect)}.map{|k,v| ["#{k.sub(/^gt_/,'')} >= ?",v] }
+              _gt_con=con_hash.extract!(*gt).map{|k,v| ["#{k.sub(/^gt_/,'')} >= ?",v] }
             end
             if lt.present?
-              lt.collect!{|item|item.to_s}
+              lt.collect!(&:to_s)
               lt = (lt + lt.map{|item| "lt_#{item}"}) & con_hash.keys
-              _lt_con= con_hash.extract!(*lt).tap{|t|Rails.logger.info(t.inspect)}.map{|k,v| ["#{k.sub(/^lt_/,'')} <= ?",v] }
+              _lt_con= con_hash.extract!(*lt).map{|k,v| ["#{k.sub(/^lt_/,'')} <= ?",v] }
             end
 
             all_ary_con = ((_like_con || [])+(_gt_con||[])+(_lt_con||[])).transpose
