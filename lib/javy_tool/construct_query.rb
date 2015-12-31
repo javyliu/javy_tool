@@ -19,7 +19,7 @@ module JavyTool
           if con_hash.present?
             _like_con = con_hash.extract!(*(like_ary.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","%#{v}%"] } if like_ary.present?
             _left_like_con = con_hash.extract!(*(left_like.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","#{v}%"] } if left_like.present?
-            _right_like_con = con_hash.extract!(*(left_like.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","#{v}%"] } if right_like.present?
+            _right_like_con = con_hash.extract!(*(right_like.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","#{v}%"] } if right_like.present?
 
             if gt.present?
               gt.collect!(&:to_s)
