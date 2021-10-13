@@ -15,7 +15,8 @@ module JavyTool
         #self.instance_variable_set("@#{param}", _obj)
 
         if params[param]
-          con_hash = params[param].select{|_,value|value.present?}
+
+          con_hash = params[param].permit!.to_hash.select{|_,value|value.present?}
           if con_hash.present?
             _like_con = con_hash.extract!(*(like_ary.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","%#{v}%"] } if like_ary.present?
             _left_like_con = con_hash.extract!(*(left_like.collect{|item| item.to_s} & con_hash.keys)).map{|k,v| ["#{k} like ?","#{v}%"] } if left_like.present?
